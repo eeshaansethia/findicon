@@ -7,7 +7,6 @@ const ProductCard = (props) => {
             <h5 className='product-card-title'>
                 {props.name}
             </h5>
-            {/* List of features of the product */}
             <ul className='product-card-features'>
                 {props.features.map((feature, index) => {
                     return <li key={index} className='product-card-item'>{feature}</li>

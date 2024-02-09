@@ -5,7 +5,6 @@
     flex-direction: row;
     height: 100vh;
     background-color: #0d0d0d;
-    width: 100%;
 }
 
 .app-left {
@@ -15,6 +14,7 @@
     background-color: #1a1a1a;
     padding: 25px 10px;
     border-right: 1px solid #333;
+    overflow: hidden;
 }
 
 .app-left-new-button {
@@ -75,6 +75,31 @@
     max-width: 100%;
 }
 
+.app-right-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 0 1rem;
+}
+
+.app-right-top-menu {
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: none;
+}
+
+.app-left-top-menu {
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: none;
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+}
+
 .app-right-name {
     font-family: 'Courier New', Courier, monospace;
     font-size: 1.8rem;
@@ -86,6 +111,7 @@
     align-items: center;
     justify-content: flex-start;
     align-self: flex-start;
+    margin-bottom: 0;
 }
 
 .app-right-name-image {
@@ -160,4 +186,52 @@
     height: 50px;
     display: flex;
     border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+    .app {
+        flex-direction: column;
+    }
+
+    .app-left {
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        transition: 0.5s all ease;
+        height: 100vh;
+        z-index: 100;
+    }
+
+    .app-left-top-menu {
+        display: block;
+    }
+
+    .app-left.active {
+        left: 0;
+        transition: 0.5s all ease;
+        height: 100vh;
+        z-index: 100;
+    }
+
+    .app-right {
+        width: 100%;
+        height: 100vh;
+        padding: 25px 10px;
+    }
+
+    .app-right-header {
+        justify-content: space-between;
+        padding: 0 1rem;
+    }
+
+    .app-right-top-menu {
+        display: block;
+    }
+}
+
+@media (max-width: 300px) {
+    .app-right-header {
+        padding: 0 0.5rem;
+    }
 }

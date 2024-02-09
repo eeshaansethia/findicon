@@ -11,6 +11,7 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const [allPrompts, setAllPrompts] = useState([]);
+  const [toggleMenu, setToggleMenu] = useState(false);
 
   const getAllPrompts = async () => {
     await Axios.get('http://localhost:3001/prompts')
@@ -46,6 +47,7 @@ const App = () => {
       }).catch((error) => {
         console.log(error);
       });
+    setToggleMenu(false);
   }
 
   const getIcon = async () => {
@@ -85,7 +87,6 @@ const App = () => {
         setIcon(res.data.icon.data[0].url);
         setProducts(res.data.products);
         getAllPrompts();
-        setPrompt('');
       }
       ).catch((error) => {
         setLoading(false);
@@ -116,12 +117,19 @@ const App = () => {
         pauseOnHover
         theme="dark"
       />
-      <div className="app-left">
+      <div className={toggleMenu ? "app-left active" : "app-left"}>
+        <div className="app-left-top-menu" onClick={
+          () => {
+            setToggleMenu(!toggleMenu);
+          }}>
+          <i className="fa-solid fa-times"></i>
+        </div>
         <div className="app-left-new">
           <button className="app-left-new-button" onClick={() => {
             setPrompt('');
             setIcon(null);
             setProducts([]);
+            setToggleMenu(false);
           }}>
             <i className="fa-regular fa-pen-to-square"></i>
             New Prompt
@@ -136,25 +144,37 @@ const App = () => {
               setPrompt(prompt.name);
               setIcon(prompt.icon);
               setProducts(prompt.products);
+              setToggleMenu(false);
             }}>
-              <PromptCard name={prompt.name} icon={prompt.icon} deleteFunction={() => deletePrompt(prompt._id)} />
+              <PromptCard name={prompt.name} icon={prompt.icon} deleteFunction={() => deletePrompt(prompt._id)} key={index}
+              />
             </div>
           })}
         </div>
       </div>
       <div className="app-right">
-        <h1 className="app-right-name">
-          <div className="app-right-name-image">
-            <img className="app-right-name-image-icon" src={logo} />
+        <div className='app-right-header'>
+          <div className="app-right-top-menu" onClick={
+            () => {
+              setToggleMenu(!toggleMenu);
+            }}>
+            {toggleMenu ? <i className="fa-solid fa-times"></i>
+              : <i className="fa-solid fa-bars"></i>}
           </div>
-          Findicon
-        </h1>
+          <h1 className="app-right-name">
+            <div className="app-right-name-image">
+              <img className="app-right-name-image-icon" src={logo} />
+            </div>
+            Findicon
+          </h1>
+        </div>
+
         <div className="app-right-main">
 
         </div>
         <div className="app-right-bottom">
           <div className="app-right-search">
-            <input className="app-right-search-input" type="text" placeholder="Type your prompt to get an icon.." value={prompt} required onChange={(e) => {
+            <input className="app-right-search-input" type="text" placeholder="Type your prompt to get an icon.." value={prompt} disabled={icon ? true : false} required onChange={(e) => {
               setPrompt(e.target.value);
             }} />
             <button className="app-right-search-button" onClick={getIcon} disabled={!loading && prompt ? false : true} style={{
