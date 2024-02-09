@@ -14,8 +14,10 @@ const App = () => {
   const [allPrompts, setAllPrompts] = useState([]);
   const [toggleMenu, setToggleMenu] = useState(false);
 
+  console.log(process.env.REACT_APP_BACKEND_URL);
+
   const getAllPrompts = async () => {
-    await Axios.get('http://localhost:3001/prompts')
+    await Axios.get(`${process.env.REACT_APP_BACKEND_URL}/prompts`)
       .then((res) => {
         setAllPrompts(res.data);
         console.log(res.data);
@@ -41,7 +43,7 @@ const App = () => {
   }, [prompt]);
 
   const deletePrompt = async (id) => {
-    await Axios.delete(`http://localhost:3001/prompts/delete/${id}`)
+    await Axios.delete(`${process.env.REACT_APP_BACKEND_URL}/prompts/delete/${id}`)
       .then((res) => {
         console.log(res.data);
         getAllPrompts();
@@ -67,7 +69,7 @@ const App = () => {
     }
     setLoading(true);
     setIcon(null);
-    await Axios.get(`http://localhost:3001/prompts/icon?prompt=${prompt}`)
+    await Axios.get(`${process.env.REACT_APP_BACKEND_URL}/prompts/icon?prompt=${prompt}`)
       .then((res) => {
         if (res.status !== 200) {
           setLoading(false);
