@@ -4,6 +4,7 @@ import logo from './assets/icon.png';
 import Axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import PromptCard from './components/PromptCard';
+import ProductCard from './components/ProductCard';
 
 const App = () => {
   const [prompt, setPrompt] = useState('');
@@ -117,6 +118,7 @@ const App = () => {
         pauseOnHover
         theme="dark"
       />
+
       <div className={toggleMenu ? "app-left active" : "app-left"}>
         <div className="app-left-top-menu" onClick={
           () => {
@@ -124,6 +126,7 @@ const App = () => {
           }}>
           <i className="fa-solid fa-times"></i>
         </div>
+
         <div className="app-left-new">
           <button className="app-left-new-button" onClick={() => {
             setPrompt('');
@@ -135,11 +138,13 @@ const App = () => {
             New Prompt
           </button>
         </div>
+
         <p className="app-left-prompts-title">{
           allPrompts.length === 0 ? 'No Prompts Available' : 'Previous Prompts'
         }</p>
+
         <div className="app-left-prompts">
-          {allPrompts.map((prompt, index) => {
+          {allPrompts && allPrompts.map((prompt, index) => {
             return <div className="app-left-prompt" key={index} onClick={() => {
               setPrompt(prompt.name);
               setIcon(prompt.icon);
@@ -152,6 +157,7 @@ const App = () => {
           })}
         </div>
       </div>
+
       <div className="app-right">
         <div className='app-right-header'>
           <div className="app-right-top-menu" onClick={
@@ -161,6 +167,7 @@ const App = () => {
             {toggleMenu ? <i className="fa-solid fa-times"></i>
               : <i className="fa-solid fa-bars"></i>}
           </div>
+
           <h1 className="app-right-name">
             <div className="app-right-name-image">
               <img className="app-right-name-image-icon" src={logo} />
@@ -170,13 +177,27 @@ const App = () => {
         </div>
 
         <div className="app-right-main">
-
+          {products && products.length > 0 ?
+            <div className="app-right-main-products">
+              {products.map((product, index) => {
+                return (
+                  <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12"
+                    key={index}>
+                    <ProductCard name={product.name} features={product.features} key={index} />
+                  </div>
+                )
+              })}
+            </div>
+            : null
+          }
         </div>
+
         <div className="app-right-bottom">
           <div className="app-right-search">
             <input className="app-right-search-input" type="text" placeholder="Type your prompt to get an icon.." value={prompt} disabled={icon ? true : false} required onChange={(e) => {
               setPrompt(e.target.value);
             }} />
+
             <button className="app-right-search-button" onClick={getIcon} disabled={!loading && prompt ? false : true} style={{
               cursor: !loading && prompt ? 'pointer' : 'not-allowed'
             }}>
@@ -188,6 +209,7 @@ const App = () => {
               }
             </button>
           </div>
+
           {icon && !loading ?
             <div className="app-right-main-icon">
               <img className="app-right-main-icon-image" src={icon} />

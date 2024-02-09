@@ -2,7 +2,6 @@ import React from 'react'
 import '../styles/promptCard.css'
 
 const PromptCard = (props) => {
-    console.log(props);
     return (
         <div className="prompt-card">
             <div className="prompt-card-body">
