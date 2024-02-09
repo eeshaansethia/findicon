@@ -177,19 +177,39 @@ const App = () => {
         </div>
 
         <div className="app-right-main">
-          {products && products.length > 0 ?
-            <div className="app-right-main-products">
-              {products.map((product, index) => {
-                return (
-                  <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12"
-                    key={index}>
-                    <ProductCard name={product.name} features={product.features} key={index} />
-                  </div>
-                )
-              })}
-            </div>
-            : null
-          }
+
+          <div className="app-right-main-products">
+            {(products && products.length > 0 && !loading) ? products.map((product, index) => {
+              return (
+                <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12"
+                  key={index}>
+                  <ProductCard name={product.name} features={product.features} key={index} />
+                </div>)
+            }) : loading ?
+              <>
+                <div className='placeholder-wave' style={{
+                  width: '225px',
+                  height: '225px',
+                  backgroundColor: '#1a1a1a',
+                  borderRadius: '10px'
+                }}></div>
+                <div className='placeholder-wave' style={{
+                  width: '225px',
+                  height: '225px',
+                  backgroundColor: '#1a1a1a',
+                  borderRadius: '10px'
+                }}></div>
+                <div className='placeholder-wave' style={{
+                  width: '225px',
+                  height: '225px',
+                  backgroundColor: '#1a1a1a',
+                  borderRadius: '10px'
+                }}></div>
+              </>
+              : null
+            }
+          </div>
+
         </div>
 
         <div className="app-right-bottom">
@@ -219,7 +239,7 @@ const App = () => {
               <div className='placeholder-wave' style={{
                 width: '50px',
                 height: '50px',
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                backgroundColor: '#1a1a1a',
                 borderRadius: '10px'
               }}></div>
             </div> : null
