@@ -26,6 +26,28 @@ const App = () => {
     getAllPrompts();
   }, []);
 
+  useEffect(() => {
+    const search = async (e) => {
+      if (e.key === 'Enter') {
+        await getIcon();
+      }
+    }
+    window.addEventListener('keydown', search);
+    return () => {
+      window.removeEventListener('keydown', search);
+    }
+  }, [prompt]);
+
+  const deletePrompt = async (id) => {
+    await Axios.delete(`http://localhost:3001/prompts/delete/${id}`)
+      .then((res) => {
+        console.log(res.data);
+        getAllPrompts();
+      }).catch((error) => {
+        console.log(error);
+      });
+  }
+
   const getIcon = async () => {
     if (!prompt || prompt === '' || prompt === 'null') {
       toast('Enter a valid prompt!', {
@@ -63,6 +85,7 @@ const App = () => {
         setIcon(res.data.icon.data[0].url);
         setProducts(res.data.products);
         getAllPrompts();
+        setPrompt('');
       }
       ).catch((error) => {
         setLoading(false);
@@ -95,14 +118,27 @@ const App = () => {
       />
       <div className="app-left">
         <div className="app-left-new">
-          <button className="app-left-new-button">
+          <button className="app-left-new-button" onClick={() => {
+            setPrompt('');
+            setIcon(null);
+            setProducts([]);
+          }}>
             <i className="fa-regular fa-pen-to-square"></i>
             New Prompt
           </button>
         </div>
+        <p className="app-left-prompts-title">{
+          allPrompts.length === 0 ? 'No Prompts Available' : 'Previous Prompts'
+        }</p>
         <div className="app-left-prompts">
           {allPrompts.map((prompt, index) => {
-            return <PromptCard key={index} name={prompt.name} icon={prompt.icon} />
+            return <div className="app-left-prompt" key={index} onClick={() => {
+              setPrompt(prompt.name);
+              setIcon(prompt.icon);
+              setProducts(prompt.products);
+            }}>
+              <PromptCard name={prompt.name} icon={prompt.icon} deleteFunction={() => deletePrompt(prompt._id)} />
+            </div>
           })}
         </div>
       </div>

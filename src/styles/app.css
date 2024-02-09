@@ -11,7 +11,7 @@
 .app-left {
     display: flex;
     flex-direction: column;
-    width: 300px;
+    width: 350px;
     background-color: #1a1a1a;
     padding: 25px 10px;
     border-right: 1px solid #333;
@@ -40,6 +40,28 @@
     background-color: #333;
     cursor: pointer;
     transition: 0.3s all ease;
+}
+
+.app-left-prompts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 10px;
+}
+
+.app-left-prompt {
+    width: 100%;
+}
+
+.app-left-prompts-title {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    color: white;
+    margin: 1rem 0;
+    text-align: center;
+    text-decoration: underline;
 }
 
 .app-right {
