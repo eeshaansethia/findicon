@@ -92,6 +92,7 @@
     border-radius: 10px;
     background-color: #1a1a1a;
     padding: 0 1rem;
+    padding-right: 0;
 }
 
 .app-right-search-input {
@@ -116,10 +117,25 @@
 .app-right-search-button {
     background-color: transparent;
     color: white;
-    padding: 0.8rem 1rem;
     border: none;
     width: 50px;
     height: 50px;
     border-radius: 10px;
     cursor: pointer;
+}
+
+.app-right-bottom {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    gap: 20px;
+}
+
+.app-right-main-icon-image {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    border-radius: 10px;
 }
